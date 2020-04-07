@@ -250,6 +250,7 @@ Container random_elements(
 // API search type: apply_functions : ([(a -> b)], a) -> [b]
 // fwd bind count: 1
 // Applies a list of functions to a value.
+#undef FOut
 template <typename FunctionContainer,
           typename F = typename FunctionContainer::value_type,
           typename FIn>

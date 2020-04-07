@@ -109,8 +109,8 @@ auto carthesian_product_with_where(F f,
 {
     using X = typename Container1::value_type;
     using Y = typename Container2::value_type;
-    using FOut = internal::invoke_result_t<F, X, Y>;
-    using ContainerOut = std::vector<std::decay_t<FOut>>;
+    #define FOut internal::invoke_result_t<F, X, Y>
+    #define ContainerOut std::vector<std::decay_t<FOut>>
 
     ContainerOut result;
     auto itOut = internal::get_back_inserter(result);
@@ -222,6 +222,7 @@ namespace internal
 // Returns the product set with a given power.
 // carthesian_product_n(2, "ABCD")
 //   == AA AB AC AD BA BB BC BD CA CB CC CD DA DB DC DD
+#undef ContainerOut
 template <typename ContainerIn,
     typename T = typename ContainerIn::value_type,
     typename ContainerOut = std::vector<ContainerIn>>

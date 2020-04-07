@@ -304,14 +304,13 @@ auto compose_result(Callables&&... callables)
             internal::trigger_static_asserts<internal::check_arity_tag,
                                                  decltype(f),
                                                  decltype(args)...>();
-            using FOut = std::decay_t<
-                internal::invoke_result_t<decltype(f), decltype(args)...>>;
+            #define FOut std::decay_t<internal::invoke_result_t<decltype(f), decltype(args)...>>
 
             internal::trigger_static_asserts<internal::unary_function_tag,
                                                  decltype(g),
                                                  typename FOut::ok_t>();
-            using GOut = std::decay_t<
-                internal::invoke_result_t<decltype(g), typename FOut::ok_t>>;
+            #define GOut std::decay_t<internal::invoke_result_t<decltype(g), typename FOut::ok_t>>
+
             static_assert(std::is_same<typename FOut::error_t,
                                        typename GOut::error_t>::value,
                           "Error type must stay the same.");
